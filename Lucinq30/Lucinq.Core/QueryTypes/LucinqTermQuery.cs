@@ -16,7 +16,7 @@ namespace Lucinq.Core.QueryTypes
 
         public TQuery GetNative<TQuery>()
         {
-            IQueryAdapter<ITermQuery, TQuery> adapter = repo.GetAdapter<TQuery>();
+            IQueryAdapter<ITermQuery, TQuery> adapter = repo.GetAdapterFromQuery<TQuery>();
             return adapter.GetQuery(this);
         }
 

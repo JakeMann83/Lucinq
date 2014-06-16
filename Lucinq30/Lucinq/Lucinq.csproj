@@ -54,7 +54,6 @@
     <Compile Include="Interfaces\IIndexSearcherAccessor.cs" />
     <Compile Include="Interfaces\ILuceneSearchResult.cs" />
     <Compile Include="Interfaces\IQueryBuilderApiSpecific.cs" />
-    <Compile Include="Interfaces\IQueryFactory.cs" />
     <Compile Include="Querying\ApiAgnosticExtensions.cs" />
     <Compile Include="Querying\DateRangeFilter.cs" />
     <Compile Include="Interfaces\IHierarchicalQueryGroup.cs" />

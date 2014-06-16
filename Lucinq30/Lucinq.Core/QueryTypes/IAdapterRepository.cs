@@ -4,6 +4,6 @@ namespace Lucinq.Core.QueryTypes
 {
     public interface IAdapterRepository<in TInterface>
     {
-        IQueryAdapter<TInterface, TQuery> GetAdapter<TQuery>();
+        IQueryAdapter<TInterface, TQuery> GetAdapterFromQuery<TQuery>();
     }
 }
