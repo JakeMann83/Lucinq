@@ -1,6 +1,6 @@
 ﻿using System;
 using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Version = Lucene.Net.Util.Version;
 
 namespace Lucinq.Querying

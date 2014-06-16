@@ -1,6 +1,7 @@
 ﻿using System;
 using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
+using Lucinq.Core.Interfaces;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
@@ -23,14 +24,14 @@ namespace Lucinq.Querying
                 key = "Query_" + Queries.Count;
             }
             SetOccurValue(this, ref occur);
-            IQueryReference queryReference = new QueryReference { Occur = occur, Query = query };
+            IQueryReference<Query> queryReference = new QueryReference { Occur = occur, Query = query };
             Queries.Add(key, queryReference);
         }
 
-		  private void Add(Filter filter)
-		  {
-			  CurrentFilter = filter;
-		  }
+        private void Add(Filter filter)
+        {
+            CurrentFilter = filter;
+        }
 
         /// <summary>
         /// Builds the query
@@ -41,7 +42,13 @@ namespace Lucinq.Querying
             BooleanQuery booleanQuery = new BooleanQuery();
             foreach (IQueryReference query in Queries.Values)
             {
-                booleanQuery.Add(query.Query, query.Occur.GetLuceneOccurance());
+                IQueryReference<Query> actualReference = query as IQueryReference<Query>;
+                if (actualReference == null)
+                {
+                    continue;
+                }
+
+                booleanQuery.Add(actualReference.Query, query.Occur.GetLuceneOccurance());
             }
 
             foreach (IQueryBuilder query in Groups)

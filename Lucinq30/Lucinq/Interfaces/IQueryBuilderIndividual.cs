@@ -1,6 +1,6 @@
 ﻿using System;
 using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 
 namespace Lucinq.Interfaces
 {

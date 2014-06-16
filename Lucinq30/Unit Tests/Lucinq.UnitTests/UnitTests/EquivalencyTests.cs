@@ -3,7 +3,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Lucinq.Extensions;
 using Lucinq.Querying;
 using NUnit.Framework;

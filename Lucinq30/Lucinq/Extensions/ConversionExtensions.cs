@@ -1,5 +1,5 @@
 ﻿using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Lucene.Net.Documents;
 
 namespace Lucinq.Extensions

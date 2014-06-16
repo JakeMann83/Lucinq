@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Lucene.Net.Documents;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Lucinq.Interfaces;
 using Lucinq.Querying;
 using NUnit.Framework;

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Lucinq.Interfaces;
 using Lucinq.Querying;
 using Lucinq.UnitTests.IntegrationTests;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Configuration;
 
 namespace Lucinq.UnitTests.UnitTests
 {

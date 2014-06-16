@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lucinq.Interfaces
+namespace Lucinq.Core.Interfaces
 {
     public interface ISearchResult<T> : ISearchResult where T : class
     {

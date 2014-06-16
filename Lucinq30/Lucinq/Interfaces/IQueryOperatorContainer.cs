@@ -1,4 +1,4 @@
-﻿using Lucinq.Enums;
+﻿using Lucinq.Core.Enums;
 
 namespace Lucinq.Interfaces
 {
@@ -13,7 +13,5 @@ namespace Lucinq.Interfaces
         bool Term(string fieldName, string fieldValue, Matches occur, float? boost);
         bool Term(string fieldName, string fieldValue, Matches occur, float? boost, string key);
         bool Term(string fieldName, string fieldValue, Matches occur, float? boost, string key, bool? caseSensitive);
-
-
     }
 }

@@ -6,9 +6,11 @@ using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
+using Lucinq.Core.Interfaces;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
+using Lucinq.Visitors;
 using Version = Lucene.Net.Util.Version;
 
 namespace Lucinq.Querying
@@ -153,12 +155,11 @@ namespace Lucinq.Querying
 		/// <returns>The generated term query</returns>
         public virtual TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
-			Term term = GetTerm(fieldName, fieldValue, caseSensitive);
-			TermQuery query = new TermQuery(term);
-			SetBoostValue(query, boost);
+            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, caseSensitive);
 
-			Add(query, occur, key);
-			return query;
+            visitor.VisitQueryBuilder(this);
+
+			return visitor.GetQuery().GetNative<TermQuery>();
 		}
 
 		/// <summary>
@@ -178,6 +179,7 @@ namespace Lucinq.Querying
 			{
 				group.Term(fieldName, fieldValue, occur, boost, caseSensitive:caseSensitive);
 			}
+
 			return this;
 		}
 

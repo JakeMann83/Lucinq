@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucinq.UnitTests", "Unit Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{88383E66-E660-4306-8B70-5B19AF34F0CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucinq.Core", "Lucinq.Core\Lucinq.Core.csproj", "{3F397387-F50D-46FB-8307-29D251B894C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A65CD9B7-DC30-414B-83F5-A8A5DD5FCDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A65CD9B7-DC30-414B-83F5-A8A5DD5FCDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A65CD9B7-DC30-414B-83F5-A8A5DD5FCDE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F397387-F50D-46FB-8307-29D251B894C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F397387-F50D-46FB-8307-29D251B894C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F397387-F50D-46FB-8307-29D251B894C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F397387-F50D-46FB-8307-29D251B894C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

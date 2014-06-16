@@ -1,6 +1,6 @@
 ﻿using System;
 using Lucene.Net.Documents;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Lucinq.Extensions;
 
 namespace Lucinq.Building

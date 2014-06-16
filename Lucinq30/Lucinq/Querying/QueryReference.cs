@@ -1,5 +1,6 @@
 ﻿using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
+using Lucinq.Core.Interfaces;
 using Lucinq.Interfaces;
 
 namespace Lucinq.Querying
@@ -7,7 +8,7 @@ namespace Lucinq.Querying
     /// <summary>
     /// The query reference
     /// </summary>
-	public class QueryReference : IQueryReference
+	public class QueryReference : IQueryReference<Query>
 	{
         /// <summary>
         /// Gets or sets the matches value for the reference

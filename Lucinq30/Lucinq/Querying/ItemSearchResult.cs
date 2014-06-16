@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Lucene.Net.Documents;
+using Lucinq.Core.Interfaces;
+using Lucinq.Core.Querying;
 using Lucinq.Interfaces;
 
 namespace Lucinq.Querying

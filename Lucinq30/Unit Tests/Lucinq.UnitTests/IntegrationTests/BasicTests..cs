@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lucene.Net.Documents;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 using Lucinq.Querying;

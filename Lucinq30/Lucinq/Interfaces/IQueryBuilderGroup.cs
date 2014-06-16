@@ -1,7 +1,8 @@
 ﻿using System;
 using Lucene.Net.Analysis;
 using Lucene.Net.Search;
-using Lucinq.Enums;
+using Lucinq.Core.Enums;
+using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Interfaces
 {

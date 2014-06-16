@@ -1,5 +1,6 @@
 ﻿using System;
 using Lucene.Net.Search;
+using Lucinq.Core.Interfaces;
 
 namespace Lucinq.Interfaces
 {

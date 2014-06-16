@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lucene.Net.Documents;
+using Lucinq.Core.Interfaces;
 
 namespace Lucinq.Interfaces
 {
