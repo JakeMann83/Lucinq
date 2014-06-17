@@ -2,12 +2,14 @@
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
+using Lucinq.Core.Querying;
+using Lucinq.Core.QueryTypes;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
 namespace Lucinq.Querying
 {
-    public partial class QueryBuilder : IQueryBuilder
+    public partial class QueryBuilder : CoreQueryBuilder, IQueryBuilder
     {
         #region [ Build Methods ]
 
@@ -19,12 +21,9 @@ namespace Lucinq.Querying
         /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
         public virtual void Add(Query query, Matches occur, string key = null)
         {
-            if (key == null)
-            {
-                key = "Query_" + Queries.Count;
-            }
+            key = GetQueryKey(key);
             SetOccurValue(this, ref occur);
-            IQueryReference<Query> queryReference = new QueryReference { Occur = occur, Query = query };
+            IQueryReference<Query> queryReference = new NativeQueryReference { Occur = occur, Query = query };
             Queries.Add(key, queryReference);
         }
 
@@ -42,13 +41,8 @@ namespace Lucinq.Querying
             BooleanQuery booleanQuery = new BooleanQuery();
             foreach (IQueryReference query in Queries.Values)
             {
-                IQueryReference<Query> actualReference = query as IQueryReference<Query>;
-                if (actualReference == null)
-                {
-                    continue;
-                }
-
-                booleanQuery.Add(actualReference.Query, query.Occur.GetLuceneOccurance());
+                AddNativeQuery(query, booleanQuery);
+                AddLucinqQuery(query, booleanQuery);
             }
 
             foreach (IQueryBuilder query in Groups)
@@ -59,6 +53,31 @@ namespace Lucinq.Querying
             BuildSort();
 
             return booleanQuery;
+        }
+
+        private static void AddNativeQuery(IQueryReference query, BooleanQuery booleanQuery)
+        {
+            IQueryReference<Query> actualReference = query as IQueryReference<Query>;
+            if (actualReference == null)
+            {
+                return;
+            }
+
+            booleanQuery.Add(actualReference.Query, query.Occur.GetLuceneOccurance());
+        }
+
+        private static void AddLucinqQuery(IQueryReference query, BooleanQuery booleanQuery)
+        {
+            IQueryReference<IQuery> actualReference = query as IQueryReference<IQuery>;
+            if (actualReference == null)
+            {
+                return;
+            }
+
+            // todo: solve this
+
+            // booleanQuery.Add(actualReference.Query.GetNative(), query.Occur.GetLuceneOccurance());
+            return;
         }
 
         public virtual void BuildSort()
@@ -141,6 +160,7 @@ namespace Lucinq.Querying
             {
                 occur = Matches.Always;
             }
+
             if (childrenOccur == Matches.NotSet)
             {
                 childrenOccur = Matches.Always;

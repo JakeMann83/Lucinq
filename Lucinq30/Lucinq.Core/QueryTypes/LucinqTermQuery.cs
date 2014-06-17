@@ -14,9 +14,9 @@ namespace Lucinq.Core.QueryTypes
 
         public bool? CaseSensitive { get; set; }
 
-        public TQuery GetNative<TQuery>()
+        public TNative GetNative<TNative>()
         {
-            IQueryAdapter<ITermQuery, TQuery> adapter = repo.GetAdapterFromQuery<TQuery>();
+            IQueryAdapter<ITermQuery, TNative> adapter = repo.GetAdapterFromQuery<TNative>();
             return adapter.GetQuery(this);
         }
 

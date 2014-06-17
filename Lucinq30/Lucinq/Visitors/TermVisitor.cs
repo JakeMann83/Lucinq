@@ -25,7 +25,7 @@ namespace Lucinq.Visitors
 
         public void VisitQueryBuilder(IQueryBuilder queryBuilder)
         {
-            queryBuilder.Add(GetNativeQuery<TermQuery>(), Matches);
+            queryBuilder.Add(Query, Matches);
         }
     }
 }

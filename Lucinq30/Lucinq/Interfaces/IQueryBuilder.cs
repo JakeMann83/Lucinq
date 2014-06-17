@@ -1,9 +1,9 @@
 ﻿using Lucene.Net.Search;
-using Lucinq.Core.Interfaces;
+using Lucinq.Core.Querying;
 
 namespace Lucinq.Interfaces
 {
-    public interface IQueryBuilder : IQueryBuilderGroup, IQueryBuilderIndividual, IHierarchicalQueryGroup, IQueryBuilderApiSpecific, ICoreQueryBuilder
+    public interface IQueryBuilder : IQueryBuilderGroup<IQueryBuilder>, IQueryBuilderIndividual, IHierarchicalQueryGroup, IQueryBuilderApiSpecific, ICoreQueryBuilder
     {
 	    void Filter(Filter filter);
 

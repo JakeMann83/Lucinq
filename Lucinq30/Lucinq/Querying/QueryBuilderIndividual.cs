@@ -19,8 +19,6 @@ namespace Lucinq.Querying
 	{
 		#region [ Fields ]
 
-        private Matches defaultChildrenOccur;
-
 		private KeywordAnalyzer keywordAnalyzer;
 
 		#endregion
@@ -29,9 +27,7 @@ namespace Lucinq.Querying
 
 		public QueryBuilder()
 		{
-            Queries = new Dictionary<string, IQueryReference>();
 			Groups = new List<IQueryBuilder>();
-			Occur = Matches.Always;
 			SortFields = new List<SortField>();
 		}
 
@@ -52,36 +48,14 @@ namespace Lucinq.Querying
 		#region [ Properties ]
 
 		/// <summary>
-		/// Gets or sets the occurance value for the query builder
-		/// </summary>
-		public Matches Occur { get; set; }
-
-		/// <summary>
 		/// Gets or sets whether the query is to be case sensitive
 		/// </summary>
 		public bool CaseSensitive { get; set; }
 
 		/// <summary>
-		/// Gets or sets the default occur value for child queries within the builder
-		/// </summary>
-		public Matches DefaultChildrenOccur
-		{
-			get
-			{
-				return GetDefaultChildrenOccur();
-			}
-			set { defaultChildrenOccur = value; }
-		}
-
-		/// <summary>
 		/// Gets the parent query builder
 		/// </summary>
 		public IQueryBuilder Parent { get; private set; }
-
-		/// <summary>
-		/// Gets the child queries in the builder
-		/// </summary>
-        public Dictionary<string, IQueryReference> Queries { get; private set; }
 
 		/// <summary>
 		/// Gets the child groups in the builder
@@ -419,19 +393,6 @@ namespace Lucinq.Querying
 			}
 
 			occur = inputQueryBuilder != null ? inputQueryBuilder.DefaultChildrenOccur : Matches.Always;
-		}
-
-		/// <summary>
-		/// Gets the default child occur value
-		/// </summary>
-		/// <returns></returns>
-		protected virtual Matches GetDefaultChildrenOccur()
-		{
-		    if (defaultChildrenOccur == Matches.NotSet)
-		    {
-		        defaultChildrenOccur = Matches.Always;
-		    }
-		    return defaultChildrenOccur;
 		}
 
 		#endregion

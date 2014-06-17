@@ -70,7 +70,7 @@
     <Compile Include="Querying\QueryBuilderApiSpecific.cs" />
     <Compile Include="Querying\QueryBuilderIndividual.cs" />
     <Compile Include="Querying\QueryBuilderGroup.cs" />
-    <Compile Include="Querying\QueryReference.cs" />
+    <Compile Include="Querying\NativeQueryReference.cs" />
     <Compile Include="Querying\LuceneSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\QueryExtensions.cs" />

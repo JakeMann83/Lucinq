@@ -2,12 +2,11 @@
 using Lucene.Net.Analysis;
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
-using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Interfaces
 {
-    public interface IQueryBuilderGroup
-	{
+    public interface IQueryBuilderGroup<out TGroup> where TGroup : IQueryBuilderGroup<TGroup>
+    {
 		#region [ Properties ]
 
 		bool CaseSensitive { get; set; }
@@ -37,7 +36,7 @@ namespace Lucinq.Interfaces
 		/// </summary>
 		/// <param name="queries">Comma seperated lambda actions</param>
 		/// <returns>The input querybuilder</returns>
-        IQueryBuilder Setup(params Action<IQueryBuilder>[] queries);
+        TGroup Setup(params Action<IQueryBuilder>[] queries);
         
         /// <summary>
         /// Sets up term queries for each of the values specified
@@ -49,7 +48,7 @@ namespace Lucinq.Interfaces
         /// <param name="boost">A boost multiplier (1 is default / normal).</param>
         /// <param name="caseSensitive">Whether the value is explicitly case sensitive (else use the query builders value)</param>
         /// <returns>The input query builder</returns>
-        IQueryBuilder Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null);
+        TGroup Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null);
 
         /// <summary>
         /// Creates a set of keywords
@@ -61,9 +60,9 @@ namespace Lucinq.Interfaces
         /// <param name="key"></param>s
         /// <param name="caseSensitive"></param>
         /// <returns></returns>
-        IQueryBuilder Keywords(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null);
+        TGroup Keywords(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null);
 
-        IQueryBuilder WildCards(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet,
+        TGroup WildCards(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet,
 		                                        float? boost = null, bool? caseSensitive = null);
 
 		/// <summary>
@@ -71,27 +70,27 @@ namespace Lucinq.Interfaces
 		/// </summary>
 		/// <param name="queries">The lamdba expressions showing queries</param>
 		/// <returns></returns>
-        IQueryBuilder And(params Action<IQueryBuilder>[] queries);
+        TGroup And(params Action<TGroup>[] queries);
 
 		/// <summary>
 		/// Creates a simple group allowing the specification of whether it should occur, each item of which MUST occur by default
 		/// </summary>
 		/// <param name="occur">Whether the group must / should occur</param>
 		/// <param name="queries">The lamdba expressions showing queries</param>
-        IQueryBuilder And(Matches occur = Matches.NotSet, params Action<IQueryBuilder>[] queries);
+        TGroup And(Matches occur = Matches.NotSet, params Action<TGroup>[] queries);
 
 		/// <summary>
 		/// Creates a simple group that MUST occur, each item of which SHOULD occur by default
 		/// </summary>
 		/// <param name="queries">The lamdba expressions showing queries</param>
-        IQueryBuilder Or(params Action<IQueryBuilder>[] queries);
+        TGroup Or(params Action<TGroup>[] queries);
 
 		/// <summary>
 		/// Creates a simple group allowing the specification of whether it should occur, each item of which SHOULD occur by default
 		/// </summary>
 		/// <param name="occur">Whether the group must / should occur</param>
 		/// <param name="queries">The lamdba expressions showing queries</param>
-        IQueryBuilder Or(Matches occur = Matches.NotSet, params Action<IQueryBuilder>[] queries);
+        TGroup Or(Matches occur = Matches.NotSet, params Action<IQueryBuilder>[] queries);
 
 		/// <summary>
 		/// Creates a simple group allowing the specification of whether it should occur, and specification of each items occurance.
@@ -99,7 +98,7 @@ namespace Lucinq.Interfaces
 		/// <param name="occur">Whether the group must / should occur</param>
 		/// <param name="childrenOccur">Whether the child query should occur by default</param>
 		/// <param name="queries">The lamdba expressions showing queries</param>
-        IQueryBuilder Group(Matches occur = Matches.NotSet, Matches childrenOccur = Matches.NotSet, params Action<IQueryBuilder>[] queries);
+        TGroup Group(Matches occur = Matches.NotSet, Matches childrenOccur = Matches.NotSet, params Action<IQueryBuilder>[] queries);
 
 		/// <summary>
 		/// Creates a raw query lucene query
@@ -113,21 +112,21 @@ namespace Lucinq.Interfaces
 		/// <returns></returns>
         Query Raw(string field, string queryText, Matches occur = Matches.NotSet, float? boost = null, string key = null, Analyzer analyzer = null);
 
-        IQueryBuilder Sort(string fieldName, bool sortDescending = false, SortType sortType = SortType.String);
+        TGroup Sort(string fieldName, bool sortDescending = false, SortType sortType = SortType.String);
 
-        IQueryBuilder Phrase(string fieldName, string[] fieldValues, int slop, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null);
+        TGroup Phrase(string fieldName, string[] fieldValues, int slop, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null);
 
 		#endregion
 
         #region [ Creation ]
 
-        IQueryBuilder CreateAndGroup(params Action<IQueryBuilder>[] queries);
+        TGroup CreateAndGroup(params Action<TGroup>[] queries);
 
-        IQueryBuilder CreateAndGroup(Matches occur, params Action<IQueryBuilder>[] queries);
+        TGroup CreateAndGroup(Matches occur, params Action<TGroup>[] queries);
 
-        IQueryBuilder CreateOrGroup(params Action<IQueryBuilder>[] queries);
+        TGroup CreateOrGroup(params Action<TGroup>[] queries);
 
-        IQueryBuilder CreateOrGroup(Matches occur, params Action<IQueryBuilder>[] queries);
+        TGroup CreateOrGroup(Matches occur, params Action<TGroup>[] queries);
 
         #endregion
 	}

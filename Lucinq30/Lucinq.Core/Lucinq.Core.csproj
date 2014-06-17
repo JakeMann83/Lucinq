@@ -43,7 +43,8 @@
     <Compile Include="Enums\Matches.cs" />
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Enums\Store.cs" />
-    <Compile Include="Interfaces\ICoreQueryBuilder.cs" />
+    <Compile Include="Querying\CoreQueryBuilder.cs" />
+    <Compile Include="Querying\ICoreQueryBuilder.cs" />
     <Compile Include="Interfaces\IQueryManager.cs" />
     <Compile Include="Interfaces\IItemResult.cs" />
     <Compile Include="Interfaces\IQueryReference.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Querying\IQueryAdapter.cs" />
     <Compile Include="Querying\ItemResult.cs" />
+    <Compile Include="Querying\LucinqQueryReference.cs" />
     <Compile Include="QueryTypes\IAdapterRepository.cs" />
     <Compile Include="QueryTypes\IFieldQuery.cs" />
     <Compile Include="QueryTypes\IQuery.cs" />

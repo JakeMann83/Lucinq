@@ -1,9 +1,10 @@
-﻿using Lucinq.Core.Querying;
+﻿using System;
+using Lucinq.Core.Querying;
 
 namespace Lucinq.Core.QueryTypes
 {
     public interface IAdapterRepository<in TInterface>
     {
-        IQueryAdapter<TInterface, TQuery> GetAdapterFromQuery<TQuery>();
+        IQueryAdapter<TInterface, TNative> GetAdapterFromQuery<TNative>();
     }
 }

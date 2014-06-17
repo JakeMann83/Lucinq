@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Lucinq.Core.Enums;
+using Lucinq.Core.Interfaces;
+using Lucinq.Core.QueryTypes;
 
-namespace Lucinq.Core.Interfaces
+namespace Lucinq.Core.Querying
 {
     public interface ICoreQueryBuilder
     {
@@ -19,5 +21,13 @@ namespace Lucinq.Core.Interfaces
         /// Gets the child queries in the builder
         /// </summary>
         Dictionary<string, IQueryReference> Queries { get; }
+
+        /// <summary>
+        /// Adds a query to the current group
+        /// </summary>
+        /// <param name="query">The query to add</param>
+        /// <param name="occur">The occur value for the query</param>
+        /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
+        void Add(IQuery query, Matches occur, string key = null);
     }
 }
