@@ -1,25 +1,33 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
 
 namespace Lucinq.Interfaces
 {
-    public interface IQueryBuilderApiSpecific
+    public partial interface IQueryBuilderApiSpecific
     {
-        NumericRangeQuery<int> NumericRange(string fieldName, int minValue, int maxValue, Matches occur = Matches.NotSet, float? boost = null,
-                                                    int precisionStep = Int32.MaxValue, bool includeMin = true, bool includeMax = true, string key = null);
+        /// <summary>
+        /// Gets the sort fields
+        /// </summary>
+        List<SortField> SortFields { get; }
 
-        NumericRangeQuery<float> NumericRange(string fieldName, float minValue, float maxValue, Matches occur = Matches.NotSet, float? boost = null,
-                                                    int precisionStep = Int32.MaxValue, bool includeMin = true, bool includeMax = true, string key = null);
+        /// <summary>
+        /// Gets the current sort 
+        /// </summary>
+        Sort CurrentSort { get; set; }
 
-        NumericRangeQuery<double> NumericRange(string fieldName, double minValue, double maxValue, Matches occur = Matches.NotSet, float? boost = null,
-                                            int precisionStep = Int32.MaxValue, bool includeMin = true, bool includeMax = true, string key = null);
+        /// <summary>
+        /// Builds the query
+        /// </summary>
+        /// <returns>The query built from the queries and groups that have been added</returns>
+        Query Build();
 
-        NumericRangeQuery<long> NumericRange(string fieldName, long minValue, long maxValue, Matches occur = Matches.NotSet, float? boost = null,
-                                    int precisionStep = Int32.MaxValue, bool includeMin = true, bool includeMax = true, string key = null);
-
-
-        NumericRangeQuery<long> DateRange(String fieldName, DateTime minValue, DateTime maxValue, Matches occur = Matches.NotSet,
-                                              float? boost = null, int precisionStep = Int32.MaxValue, bool includeMin = true, bool includeMax = true, String key = null);
+        /// <summary>
+        /// Adds a query to the current group
+        /// </summary>
+        /// <param name="query">The query to add</param>
+        /// <param name="occur">The occur value for the query</param>
+        /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
+        void Add(Query query, Matches occur, string key = null);
     }
 }

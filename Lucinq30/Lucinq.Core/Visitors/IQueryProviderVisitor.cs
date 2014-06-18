@@ -3,7 +3,5 @@
     public interface IQueryProviderVisitor<out TInterface> where TInterface : class 
     {
         TInterface GetQuery();
-
-        T GetNativeQuery<T>();
     }
 }

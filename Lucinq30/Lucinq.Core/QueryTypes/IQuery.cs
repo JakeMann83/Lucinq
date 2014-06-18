@@ -1,9 +1,11 @@
-﻿namespace Lucinq.Core.QueryTypes
+﻿using Lucinq.Core.Querying;
+
+namespace Lucinq.Core.QueryTypes
 {
     public interface IQuery
     {
         float? Boost { get; set; }
 
-        TQuery GetNative<TQuery>();
+        TNative GetNative<TNative>(IQueryAdapter<ITermQuery, TNative> adapter);
     }
 }

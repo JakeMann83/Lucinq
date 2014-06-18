@@ -2,6 +2,7 @@
 using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
 using Lucinq.Core.QueryTypes;
+using Lucinq.Core.Visitors;
 
 namespace Lucinq.Core.Querying
 {
@@ -48,6 +49,25 @@ namespace Lucinq.Core.Querying
             key = GetQueryKey(key);
             IQueryReference<IQuery> queryReference = new LucinqQueryReference { Occur = occur, Query = query };
             Queries.Add(key, queryReference);
+        }
+
+        /// <summary>
+        /// Sets up and adds a term query object allowing the search for an explcit term in the field
+        /// Note: Wildcards should use the wildcard query type.
+        /// </summary>
+        /// <param name="fieldName">The field name to search within</param>
+        /// <param name="fieldValue">The value to match</param>
+        /// <param name="occur">Whether it must, must not or should occur in the field</param>
+        /// <param name="boost">A boost multiplier (1 is default / normal).</param>
+        /// <param name="key">The dictionary key to allow reference beyond the initial scope</param>
+        /// <param name="caseSensitive">A boolean denoting whether or not to retain case</param>
+        /// <returns>The generated term query</returns>
+        protected ITermQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
+            bool? caseSensitive = null)
+        {
+            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, caseSensitive);
+            visitor.VisitQueryBuilder(this);
+            return visitor.GetQuery();
         }
 
         protected string GetQueryKey(string key)

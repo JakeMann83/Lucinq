@@ -1,10 +1,11 @@
 ﻿using System;
+using Lucene.Net.Analysis;
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
 
 namespace Lucinq.Interfaces
 {
-    public interface IQueryBuilderIndividual
+    public partial interface IQueryBuilderApiSpecific
     {
 	    PrefixQuery PrefixedWith(String fieldname, String value, Matches occur = Matches.NotSet, float? boost = null, String key = null);
 
@@ -74,5 +75,17 @@ namespace Lucinq.Interfaces
 
         TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null,
             string key = null, bool? caseSensitive = null);
+
+        /// <summary>
+        /// Creates a raw query lucene query
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="queryText"></param>
+        /// <param name="occur"></param>
+        /// <param name="boost"></param>
+        /// <param name="key"></param>
+        /// <param name="analyzer"></param>
+        /// <returns></returns>
+        Query Raw(string field, string queryText, Matches occur = Matches.NotSet, float? boost = null, string key = null, Analyzer analyzer = null);
     }
 }

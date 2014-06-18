@@ -7,11 +7,9 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
-using Lucinq.Core.Interfaces;
+using Lucinq.Core.Visitors;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
-using Lucinq.Visitors;
-using Version = Lucene.Net.Util.Version;
 
 namespace Lucinq.Querying
 {
@@ -129,11 +127,7 @@ namespace Lucinq.Querying
 		/// <returns>The generated term query</returns>
         public virtual TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
-            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, caseSensitive);
-
-            visitor.VisitQueryBuilder(this);
-
-			return visitor.GetQuery().GetNative<TermQuery>();
+		    return AddTerm(fieldName, fieldValue, occur, boost, key, caseSensitive).GetNative(new TermQueryAdapter());
 		}
 
 		/// <summary>

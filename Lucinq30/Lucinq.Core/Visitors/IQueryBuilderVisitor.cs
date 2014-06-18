@@ -1,6 +1,6 @@
 ﻿using Lucinq.Core.Querying;
 
-namespace Lucinq.Visitors
+namespace Lucinq.Core.Visitors
 {
     public interface IQueryBuilderVisitor
     {

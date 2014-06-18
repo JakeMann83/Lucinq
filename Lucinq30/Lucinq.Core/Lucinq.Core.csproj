@@ -43,6 +43,7 @@
     <Compile Include="Enums\Matches.cs" />
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Enums\Store.cs" />
+    <Compile Include="IoC\IContainerManager.cs" />
     <Compile Include="Querying\CoreQueryBuilder.cs" />
     <Compile Include="Querying\ICoreQueryBuilder.cs" />
     <Compile Include="Interfaces\IQueryManager.cs" />
@@ -50,7 +51,12 @@
     <Compile Include="Interfaces\IQueryReference.cs" />
     <Compile Include="Interfaces\ISearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Querying\IHierarchicalQueryGroup.cs" />
     <Compile Include="Querying\IQueryAdapter.cs" />
+    <Compile Include="Querying\IQueryBuilderGroup.cs" />
+    <Compile Include="Querying\IQueryRepository.cs" />
+    <Compile Include="Visitors\IBooleanQueryVisitor.cs" />
+    <Compile Include="Visitors\IQueryBuilderVisitor.cs" />
     <Compile Include="Querying\ItemResult.cs" />
     <Compile Include="Querying\LucinqQueryReference.cs" />
     <Compile Include="QueryTypes\IAdapterRepository.cs" />
@@ -58,7 +64,7 @@
     <Compile Include="QueryTypes\IQuery.cs" />
     <Compile Include="QueryTypes\ITermQuery.cs" />
     <Compile Include="QueryTypes\LucinqTermQuery.cs" />
-    <Compile Include="Visitors\AbstractTermVisitor.cs" />
+    <Compile Include="Visitors\TermVisitor.cs" />
     <Compile Include="Visitors\IQueryProviderVisitor.cs" />
   </ItemGroup>
   <ItemGroup />

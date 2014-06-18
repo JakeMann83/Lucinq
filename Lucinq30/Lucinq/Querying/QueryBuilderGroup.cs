@@ -4,6 +4,7 @@ using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
 using Lucinq.Core.Querying;
 using Lucinq.Core.QueryTypes;
+using Lucinq.Core.Visitors;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
@@ -76,8 +77,7 @@ namespace Lucinq.Querying
 
             // todo: solve this
 
-            // booleanQuery.Add(actualReference.Query.GetNative(), query.Occur.GetLuceneOccurance());
-            return;
+            booleanQuery.Add(actualReference.Query.GetNative(new TermQueryAdapter()), query.Occur.GetLuceneOccurance());
         }
 
         public virtual void BuildSort()
