@@ -43,7 +43,6 @@
     <Compile Include="Enums\Matches.cs" />
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Enums\Store.cs" />
-    <Compile Include="IoC\IContainerManager.cs" />
     <Compile Include="Querying\CoreQueryBuilder.cs" />
     <Compile Include="Querying\ICoreQueryBuilder.cs" />
     <Compile Include="Interfaces\IQueryManager.cs" />
@@ -55,6 +54,7 @@
     <Compile Include="Querying\IQueryAdapter.cs" />
     <Compile Include="Querying\IQueryBuilderGroup.cs" />
     <Compile Include="Querying\IQueryRepository.cs" />
+    <Compile Include="Visitors\AbstractQueryVisitor.cs" />
     <Compile Include="Visitors\IBooleanQueryVisitor.cs" />
     <Compile Include="Visitors\IQueryBuilderVisitor.cs" />
     <Compile Include="Querying\ItemResult.cs" />
@@ -64,8 +64,8 @@
     <Compile Include="QueryTypes\IQuery.cs" />
     <Compile Include="QueryTypes\ITermQuery.cs" />
     <Compile Include="QueryTypes\LucinqTermQuery.cs" />
-    <Compile Include="Visitors\TermVisitor.cs" />
-    <Compile Include="Visitors\IQueryProviderVisitor.cs" />
+    <Compile Include="Visitors\TermQueryVisitor.cs" />
+    <Compile Include="Visitors\IQueryProvider.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
