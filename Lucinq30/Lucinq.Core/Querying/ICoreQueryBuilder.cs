@@ -8,6 +8,11 @@ namespace Lucinq.Core.Querying
     public interface ICoreQueryBuilder
     {
         /// <summary>
+        /// Gets or sets whether queries are case sensitive by default
+        /// </summary>
+        bool CaseSensitive { get; set; }
+
+        /// <summary>
         /// Gets or sets the occurance value for the query builder
         /// </summary>
         Matches Occur { get; set; }

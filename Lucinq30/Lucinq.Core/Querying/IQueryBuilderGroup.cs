@@ -5,12 +5,6 @@ namespace Lucinq.Core.Querying
 {
     public interface IQueryBuilderGroup<out TGroup> where TGroup : IQueryBuilderGroup<TGroup>
     {
-		#region [ Properties ]
-
-		bool CaseSensitive { get; set; }
-
-		#endregion
-
 		#region [ Methods ]
 
 		/// <summary>

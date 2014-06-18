@@ -7,7 +7,6 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
-using Lucinq.Core.Visitors;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
@@ -44,11 +43,6 @@ namespace Lucinq.Querying
 		#endregion
 
 		#region [ Properties ]
-
-		/// <summary>
-		/// Gets or sets whether the query is to be case sensitive
-		/// </summary>
-		public bool CaseSensitive { get; set; }
 
 		/// <summary>
 		/// Gets the parent query builder
@@ -377,16 +371,6 @@ namespace Lucinq.Querying
 				return;
 			}
 			query.SetBoost(boost.Value);
-		}
-
-		protected virtual void SetOccurValue(IQueryBuilder inputQueryBuilder, ref Matches occur)
-		{
-            if (occur != Matches.NotSet)
-			{
-				return;
-			}
-
-			occur = inputQueryBuilder != null ? inputQueryBuilder.DefaultChildrenOccur : Matches.Always;
 		}
 
 		#endregion

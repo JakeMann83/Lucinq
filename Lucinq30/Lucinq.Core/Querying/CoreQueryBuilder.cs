@@ -39,6 +39,11 @@ namespace Lucinq.Core.Querying
         }
 
         /// <summary>
+        /// Gets or sets whether the query is to be case sensitive
+        /// </summary>
+        public bool CaseSensitive { get; set; }
+
+        /// <summary>
         /// Adds a query to the current group
         /// </summary>
         /// <param name="query">The query to add</param>
@@ -47,6 +52,7 @@ namespace Lucinq.Core.Querying
         public virtual void Add(IQuery query, Matches occur, string key = null)
         {
             key = GetQueryKey(key);
+            SetOccurValue(this, ref occur);
             IQueryReference<IQuery> queryReference = new LucinqQueryReference { Occur = occur, Query = query };
             Queries.Add(key, queryReference);
         }
@@ -65,7 +71,8 @@ namespace Lucinq.Core.Querying
         protected ITermQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
             bool? caseSensitive = null)
         {
-            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, caseSensitive);
+            bool actualCaseSensitivity = caseSensitive ?? CaseSensitive;
+            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, actualCaseSensitivity);
             visitor.VisitQueryBuilder(this);
             return visitor.GetQuery();
         }
@@ -91,6 +98,17 @@ namespace Lucinq.Core.Querying
                 defaultChildrenOccur = Matches.Always;
             }
             return defaultChildrenOccur;
+        }
+
+
+        protected virtual void SetOccurValue(ICoreQueryBuilder inputQueryBuilder, ref Matches occur)
+        {
+            if (occur != Matches.NotSet)
+            {
+                return;
+            }
+
+            occur = inputQueryBuilder != null ? inputQueryBuilder.DefaultChildrenOccur : Matches.Always;
         }
 
     }
