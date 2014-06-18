@@ -72,7 +72,7 @@ namespace Lucinq.Core.Querying
             bool? caseSensitive = null)
         {
             bool actualCaseSensitivity = caseSensitive ?? CaseSensitive;
-            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, actualCaseSensitivity);
+            TermVisitor visitor = new TermVisitor(fieldName, fieldValue, occur, boost, actualCaseSensitivity, key);
             visitor.VisitQueryBuilder(this);
             return visitor.GetQuery();
         }
