@@ -40,9 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\AbstractFieldValueQueryAdapter.cs" />
+    <Compile Include="Adapters\AbstractQueryAdapter.cs" />
     <Compile Include="Enums\Matches.cs" />
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Enums\Store.cs" />
+    <Compile Include="Querying\AbstractQueryBuilder.cs" />
+    <Compile Include="Querying\AbstractQueryBuilderGrouping.cs" />
     <Compile Include="Querying\CoreQueryBuilder.cs" />
     <Compile Include="Querying\ICoreQueryBuilder.cs" />
     <Compile Include="Interfaces\IQueryManager.cs" />
@@ -50,21 +54,21 @@
     <Compile Include="Interfaces\IQueryReference.cs" />
     <Compile Include="Interfaces\ISearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Querying\IHierarchicalQueryGroup.cs" />
     <Compile Include="Querying\IQueryAdapter.cs" />
     <Compile Include="Querying\IQueryBuilderGroup.cs" />
     <Compile Include="Querying\IQueryRepository.cs" />
     <Compile Include="Visitors\AbstractQueryVisitor.cs" />
-    <Compile Include="Visitors\IBooleanQueryVisitor.cs" />
+    <Compile Include="Visitors\WildcardQueryVisitor.cs" />
+    <Compile Include="Visitors\IBooleanQuery.cs" />
     <Compile Include="Visitors\IQueryBuilderVisitor.cs" />
     <Compile Include="Querying\ItemResult.cs" />
     <Compile Include="Querying\LucinqQueryReference.cs" />
     <Compile Include="QueryTypes\IAdapterRepository.cs" />
     <Compile Include="QueryTypes\IFieldQuery.cs" />
     <Compile Include="QueryTypes\IQuery.cs" />
-    <Compile Include="QueryTypes\ITermQuery.cs" />
-    <Compile Include="QueryTypes\LucinqTermQuery.cs" />
-    <Compile Include="Visitors\TermQueryVisitor.cs" />
+    <Compile Include="QueryTypes\IFieldValueQuery.cs" />
+    <Compile Include="QueryTypes\LucinqFieldValueQuery.cs" />
+    <Compile Include="Visitors\FieldValueQueryVisitor.cs" />
     <Compile Include="Visitors\IQueryProvider.cs" />
   </ItemGroup>
   <ItemGroup />

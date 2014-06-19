@@ -1,6 +1,8 @@
 ﻿using System;
 using Lucene.Net.Search;
 using Lucinq.Core.Enums;
+using Lucinq.Core.Querying;
+using Lucinq.Interfaces;
 using Version = Lucene.Net.Util.Version;
 
 namespace Lucinq.Querying
@@ -63,5 +65,10 @@ namespace Lucinq.Querying
         }
 
         #endregion
+
+        protected override IQueryBuilder CreateNewChildGroup(Matches occur = Matches.NotSet, Matches childrenOccur = Matches.NotSet)
+        {
+            return new QueryBuilder(this){  Occur = occur, DefaultChildrenOccur = childrenOccur };
+        }
     }
 }

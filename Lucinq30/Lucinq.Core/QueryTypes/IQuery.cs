@@ -6,6 +6,6 @@ namespace Lucinq.Core.QueryTypes
     {
         float? Boost { get; set; }
 
-        TNative GetNative<TNative>(IQueryAdapter<ITermQuery, TNative> adapter);
+        TNative GetNative<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter);
     }
 }

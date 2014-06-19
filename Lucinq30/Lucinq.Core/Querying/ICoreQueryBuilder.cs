@@ -34,5 +34,9 @@ namespace Lucinq.Core.Querying
         /// <param name="occur">The occur value for the query</param>
         /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
         void Add(IQuery query, Matches occur, string key = null);
+
+        IFieldValueQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet,
+            float? boost = null, string key = null,
+            bool? caseSensitive = null);
     }
 }

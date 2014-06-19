@@ -68,11 +68,11 @@ namespace Lucinq.Core.Querying
         /// <param name="key">The dictionary key to allow reference beyond the initial scope</param>
         /// <param name="caseSensitive">A boolean denoting whether or not to retain case</param>
         /// <returns>The generated term query</returns>
-        protected ITermQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
+        public IFieldValueQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
             bool? caseSensitive = null)
         {
             bool actualCaseSensitivity = caseSensitive ?? CaseSensitive;
-            TermQueryVisitor visitor = new TermQueryVisitor(fieldName, fieldValue, occur, boost, actualCaseSensitivity, key);
+            FieldValueQueryVisitor visitor = new FieldValueQueryVisitor(fieldName, fieldValue, occur, boost, actualCaseSensitivity, key);
             visitor.VisitQueryBuilder(this);
             return visitor.GetQuery();
         }

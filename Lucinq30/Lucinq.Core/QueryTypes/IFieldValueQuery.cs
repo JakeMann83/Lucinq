@@ -1,6 +1,6 @@
 ﻿namespace Lucinq.Core.QueryTypes
 {
-    public interface ITermQuery : IFieldQuery
+    public interface IFieldValueQuery : IFieldQuery
     {
         string Value { get; set; }
 

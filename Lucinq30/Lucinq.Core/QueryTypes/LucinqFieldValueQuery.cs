@@ -2,7 +2,7 @@
 
 namespace Lucinq.Core.QueryTypes
 {
-    public class LucinqTermQuery : ITermQuery
+    public class LucinqFieldValueQuery : IFieldValueQuery
     {
         public float? Boost { get; set; }
 
@@ -12,7 +12,7 @@ namespace Lucinq.Core.QueryTypes
 
         public bool? CaseSensitive { get; set; }
 
-        public TNative GetNative<TNative>(IQueryAdapter<ITermQuery, TNative> adapter)
+        public TNative GetNative<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter)
         {
             return adapter.GetQuery(this);
         }

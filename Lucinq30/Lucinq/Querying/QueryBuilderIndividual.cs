@@ -6,6 +6,7 @@ using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
+using Lucinq.Adapters;
 using Lucinq.Core.Enums;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
@@ -24,11 +25,10 @@ namespace Lucinq.Querying
 
 		public QueryBuilder()
 		{
-			Groups = new List<IQueryBuilder>();
 			SortFields = new List<SortField>();
 		}
 
-		public QueryBuilder(IQueryBuilder parentQueryBuilder)
+		public QueryBuilder(QueryBuilder parentQueryBuilder)
 			: this()
 		{
 			Parent = parentQueryBuilder;
@@ -43,16 +43,6 @@ namespace Lucinq.Querying
 		#endregion
 
 		#region [ Properties ]
-
-		/// <summary>
-		/// Gets the parent query builder
-		/// </summary>
-		public IQueryBuilder Parent { get; private set; }
-
-		/// <summary>
-		/// Gets the child groups in the builder
-		/// </summary>
-		public List<IQueryBuilder> Groups { get; private set; }
 
         /// <summary>
         /// Gets the sort fields
@@ -70,29 +60,6 @@ namespace Lucinq.Querying
 		public KeywordAnalyzer KeywordAnalyzer { get { return keywordAnalyzer ?? (keywordAnalyzer = new KeywordAnalyzer()); } }
 
 		public Filter CurrentFilter { get; private set; }
-
-		#endregion
-
-		#region [ Setup Expressions ]
-
-		/// <summary>
-		/// A setup method to aid multiple query setup
-		/// </summary>
-		/// <param name="queries">Comma seperated lambda actions</param>
-		/// <returns>The input querybuilder</returns>
-		public virtual IQueryBuilder Setup(params Action<IQueryBuilder>[] queries)
-		{
-			AddQueries(queries);
-			return this;
-		}
-
-	    protected void AddQueries(params Action<IQueryBuilder>[] queries)
-	    {
-            foreach (Action<IQueryBuilder> item in queries)
-            {
-                item(this);
-            }
-	    }
 
 		#endregion
 
@@ -122,27 +89,6 @@ namespace Lucinq.Querying
         public virtual TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
 		    return AddTerm(fieldName, fieldValue, occur, boost, key, caseSensitive).GetNative(new TermQueryAdapter());
-		}
-
-		/// <summary>
-		/// Sets up term queries for each of the values specified
-		/// (usually or / and / not in depending on the occur specified)
-		/// </summary>
-		/// <param name="fieldName">The field name to search within</param>
-		/// <param name="fieldValues">The values to match</param>
-		/// <param name="occur">Whether it must, must not or should occur in the field</param>
-		/// <param name="boost">A boost multiplier (1 is default / normal).</param>
-		/// <param name="caseSensitive">A boolean denoting whether or not to retain case</param>
-		/// <returns>The input query builder</returns>
-        public virtual IQueryBuilder Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null)
-		{
-			var group = Group();
-			foreach (var fieldValue in fieldValues)
-			{
-				group.Term(fieldName, fieldValue, occur, boost, caseSensitive:caseSensitive);
-			}
-
-			return this;
 		}
 
 		#endregion
@@ -308,12 +254,7 @@ namespace Lucinq.Querying
 		/// <returns>The generated wildcard query object</returns>
         public virtual WildcardQuery WildCard(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
-			Term term = GetTerm(fieldName, fieldValue, caseSensitive);
-			WildcardQuery query = new WildcardQuery(term);
-			SetBoostValue(query, boost);
-
-			Add(query, occur, key);
-			return query;
+            return AddTerm(fieldName, fieldValue, occur, boost, key, caseSensitive).GetNative(new WildcardQueryAdapter());
 		}
 
         public virtual IQueryBuilder WildCards(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet,
@@ -326,6 +267,7 @@ namespace Lucinq.Querying
 			}
 			return this;
 		}
+
 		#endregion
 
 		#region [ Other Expressions ]

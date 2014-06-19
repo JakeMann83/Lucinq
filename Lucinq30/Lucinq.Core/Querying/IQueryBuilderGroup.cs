@@ -1,11 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using Lucinq.Core.Enums;
 
 namespace Lucinq.Core.Querying
 {
-    public interface IQueryBuilderGroup<out TGroup> where TGroup : IQueryBuilderGroup<TGroup>
+    public interface IQueryBuilderGroup<TGroup> where TGroup : IQueryBuilderGroup<TGroup>
     {
 		#region [ Methods ]
+
+        /// <summary>
+        /// Gets the parent query builder
+        /// </summary>
+        TGroup Parent { get; }
+
+        /// <summary>
+        /// Gets the child groups in the builder
+        /// </summary>
+        List<TGroup> Groups { get; }
 
 		/// <summary>
 		/// A setup method to aid multiple query setup
