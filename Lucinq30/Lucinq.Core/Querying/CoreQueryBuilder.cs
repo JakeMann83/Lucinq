@@ -51,10 +51,9 @@ namespace Lucinq.Core.Querying
         /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
         public virtual void Add<TNative>(TNative query, Matches occur, string key = null)
         {
-            key = GetQueryKey(key);
             SetOccurValue(this, ref occur);
             IQueryReference<TNative> queryReference = new LucinqQueryReference<TNative> { Occur = occur, Query = query };
-            Queries.Add(key, queryReference);
+            Queries.Add(GetQueryKey(key), queryReference);
         }
 
         /// <summary>
@@ -72,6 +71,8 @@ namespace Lucinq.Core.Querying
             bool? caseSensitive = null)
         {
             bool actualCaseSensitivity = caseSensitive ?? CaseSensitive;
+
+            SetOccurValue(this, ref occur);
 
             LucinqFieldValueQuery query = new LucinqFieldValueQuery();
             query.Field = fieldName;

@@ -21,9 +21,9 @@ namespace Lucinq.Core.Visitors
 
         public Matches Matches { get; private set; }
 
-        public virtual void VisitQueryBuilder<TGroupedQuery>(TGroupedQuery queryBuilder) where TGroupedQuery : IGroupedQuery
+        public virtual void VisitQueryBuilder<TGroupedQuery>(TGroupedQuery queryBuilder) where TGroupedQuery : IBooleanQueryAdapter
         {
-            queryBuilder.Add(Adapter.GetQuery(Query), Matches);
+            queryBuilder.AddQuery(Adapter.GetQuery(Query), Matches);
         }
 
         public virtual TInterface GetQuery()

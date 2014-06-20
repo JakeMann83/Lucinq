@@ -24,7 +24,7 @@ namespace Lucinq.Querying
         {
             NumericRangeQuery<int> numericRangeQuery = NumericRangeQuery.NewIntRange(fieldName, precisionStep, minValue, maxValue, includeMin, includeMax);
             SetBoostValue(numericRangeQuery, boost);
-            Add(numericRangeQuery, occur, key);
+            AddNative(numericRangeQuery, occur, key);
             return numericRangeQuery;
         }
 
@@ -33,7 +33,7 @@ namespace Lucinq.Querying
         {
             NumericRangeQuery<float> numericRangeQuery = NumericRangeQuery.NewFloatRange(fieldName, precisionStep, minValue, maxValue, includeMin, includeMax);
             SetBoostValue(numericRangeQuery, boost);
-            Add(numericRangeQuery, occur, key);
+            AddNative(numericRangeQuery, occur, key);
             return numericRangeQuery;
         }
 
@@ -42,7 +42,7 @@ namespace Lucinq.Querying
         {
             NumericRangeQuery<double> numericRangeQuery = NumericRangeQuery.NewDoubleRange(fieldName, precisionStep, minValue, maxValue, includeMin, includeMax);
             SetBoostValue(numericRangeQuery, boost);
-            Add(numericRangeQuery, occur, key);
+            AddNative(numericRangeQuery, occur, key);
             return numericRangeQuery;
         }
 
@@ -51,7 +51,7 @@ namespace Lucinq.Querying
         {
             NumericRangeQuery<long> numericRangeQuery = NumericRangeQuery.NewLongRange(fieldName, precisionStep, minValue, maxValue, includeMin, includeMax);
             SetBoostValue(numericRangeQuery, boost);
-            Add(numericRangeQuery, occur, key);
+            AddNative(numericRangeQuery, occur, key);
             return numericRangeQuery;
         }
 
@@ -60,7 +60,7 @@ namespace Lucinq.Querying
         {
             NumericRangeQuery<long> numericRangeQuery = NumericRangeQuery.NewLongRange(fieldName, precisionStep, minValue.Ticks, maxValue.Ticks, includeMin, includeMax);
             SetBoostValue(numericRangeQuery, boost);
-            Add(numericRangeQuery, occur, key);
+            AddNative(numericRangeQuery, occur, key);
             return numericRangeQuery;
         }
 

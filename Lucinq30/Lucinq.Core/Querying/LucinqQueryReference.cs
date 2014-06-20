@@ -1,6 +1,5 @@
 ﻿using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
-using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Core.Querying
 {

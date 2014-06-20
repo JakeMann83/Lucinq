@@ -67,12 +67,12 @@ namespace Lucinq.Querying
 
 		#region [ Term Expressions ]
 
-		 public virtual PrefixQuery PrefixedWith(String fieldname, String value, Matches occur = Matches.NotSet, float? boost = null, String key = null)
+		public virtual PrefixQuery PrefixedWith(String fieldname, String value, Matches occur = Matches.NotSet, float? boost = null, String key = null)
 		{
 			PrefixQuery query = new PrefixQuery(new Term(fieldname, value));
 			SetBoostValue(query, boost);
 
-			Add(query, occur, key);
+            AddNative(query, occur, key);
 
 			return query;
 		}
@@ -139,7 +139,7 @@ namespace Lucinq.Querying
 			FuzzyQuery query = new FuzzyQuery(term);
 			SetBoostValue(query, boost);
 
-			Add(query, occur, key);
+			AddNative(query, occur, key);
 			return query;
 		}
 
@@ -163,7 +163,7 @@ namespace Lucinq.Querying
 			SetBoostValue(query, boost);
 			query.SetSlop(slop);
 
-			Add(query, occur, key);
+            AddNative(query, occur, key);
 			return query;
 		}
 
@@ -209,7 +209,7 @@ namespace Lucinq.Querying
 			}
 			TermRangeQuery query = new TermRangeQuery(QueryParser.Escape(fieldName), rangeStart, rangeEnd, includeLower, includeUpper);
 			SetBoostValue(query, boost);
-			Add(query, occur, key);
+            AddNative(query, occur, key);
 			return query;
 		}
 
@@ -286,7 +286,7 @@ namespace Lucinq.Querying
             QueryParser queryParser = new QueryParser(CurrentVersion, field, analyzer);
 			Query query = queryParser.Parse(queryText);
 			SetBoostValue(query, boost);
-			Add(query, occur, key);
+			AddNative(query, occur, key);
 			return query;
 		}
 
@@ -320,5 +320,13 @@ namespace Lucinq.Querying
 		}
 
 		#endregion
+
+        private void AddNative(Query query, Matches occur, string key)
+        {
+            var nativeReference = new NativeQueryReference();
+            nativeReference.Query = query;
+            nativeReference.Occur = occur;
+            this.Queries.Add(GetQueryKey(key), nativeReference);
+        }
 	}
 }

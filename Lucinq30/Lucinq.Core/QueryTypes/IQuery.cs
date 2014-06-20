@@ -1,4 +1,6 @@
-﻿namespace Lucinq.Core.QueryTypes
+﻿using Lucinq.Core.Querying;
+
+namespace Lucinq.Core.QueryTypes
 {
     public interface IQuery
     {

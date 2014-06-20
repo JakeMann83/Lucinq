@@ -23,32 +23,11 @@ namespace Lucinq.Querying
         /// <returns>The query built from the queries and groups that have been added</returns>
         public virtual Query Build()
         {
-            IQueryAdapter<IGroupedQuery, BooleanQuery> booleanQueryAdapter = new BooleanQueryAdapter();
-            IGroupedQuery groupedQuery = null;
-            foreach (IQueryReference query in Queries.Values)
-            {
-                VisitQuery(query, groupedQuery);
-            }
-
-            /*foreach (IQueryBuilder query in Groups)
-            {
-                groupedQuery.Add(query.Build(), query.Occur.GetLuceneOccurance());
-            }*/
-
+            IBooleanQueryAdapter<BooleanQuery> booleanQueryAdapter = new BooleanQueryAdapter(this);
+            
             BuildSort();
 
-            return booleanQueryAdapter.GetQuery(groupedQuery);
-        }
-
-        private void VisitQuery(IQueryReference query, IGroupedQuery groupedQuery)
-        {
-            IQueryReference<IQueryBuilderVisitor> visitorReference = query as IQueryReference<IQueryBuilderVisitor>;
-            if (visitorReference == null)
-            {
-                return;
-            }
-
-            visitorReference.Query.VisitQueryBuilder(groupedQuery);
+            return booleanQueryAdapter.GetQuery();
         }
 
         public virtual void BuildSort()

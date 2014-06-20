@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,7 +63,6 @@
     <Compile Include="Querying\IQueryBuilderGroup.cs" />
     <Compile Include="Querying\IQueryRepository.cs" />
     <Compile Include="Visitors\AbstractQueryVisitor.cs" />
-    <Compile Include="Visitors\IGroupedQuery.cs" />
     <Compile Include="Visitors\IQueryBuilderVisitor.cs" />
     <Compile Include="Querying\ItemResult.cs" />
     <Compile Include="Querying\LucinqQueryReference.cs" />
@@ -69,7 +74,9 @@
     <Compile Include="Visitors\FieldValueQueryVisitor.cs" />
     <Compile Include="Visitors\IQueryProvider.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
