@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lucinq.Core.Enums;
+using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Core.Querying
 {
@@ -35,7 +36,7 @@ namespace Lucinq.Core.Querying
         /// <param name="boost">A boost multiplier (1 is default / normal).</param>
         /// <param name="caseSensitive">Whether the value is explicitly case sensitive (else use the query builders value)</param>
         /// <returns>The input query builder</returns>
-        TGroup Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null);
+        TGroup Terms<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null);
 
         /// <summary>
         /// Creates a set of keywords

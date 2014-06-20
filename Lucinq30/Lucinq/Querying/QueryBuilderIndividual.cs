@@ -94,6 +94,12 @@ namespace Lucinq.Querying
 		    return Term(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 		}
 
+        public virtual IQueryBuilder Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
+        {
+            var adapter = new TermQueryAdapter();
+            return Terms(adapter, fieldName, fieldValues, occur, boost, caseSensitive);
+        }
+
 		#endregion
 
 		#region [ Keywords ]

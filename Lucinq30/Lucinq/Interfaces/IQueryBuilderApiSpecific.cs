@@ -97,6 +97,9 @@ namespace Lucinq.Interfaces
         TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null,
             string key = null, bool? caseSensitive = null);
 
+        IQueryBuilder Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null,
+            string key = null, bool? caseSensitive = null);
+
         /// <summary>
         /// Creates a raw query lucene query
         /// </summary>
