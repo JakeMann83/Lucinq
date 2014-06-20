@@ -2,6 +2,7 @@
 using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
 using Lucinq.Core.QueryTypes;
+using Lucinq.Core.Visitors;
 
 namespace Lucinq.Core.Querying
 {
@@ -33,9 +34,9 @@ namespace Lucinq.Core.Querying
         /// <param name="query">The query to add</param>
         /// <param name="occur">The occur value for the query</param>
         /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
-        void Add(IQuery query, Matches occur, string key = null);
+        void Add<TNative>(TNative query, Matches occur, string key = null);
 
-        IFieldValueQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet,
+        TNative Term<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string fieldValue, Matches occur = Matches.NotSet,
             float? boost = null, string key = null,
             bool? caseSensitive = null);
     }

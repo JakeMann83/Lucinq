@@ -1,21 +1,14 @@
 ﻿using Lucinq.Core.Enums;
+using Lucinq.Core.Querying;
 using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Core.Visitors
 {
-    public class FieldValueQueryVisitor : AbstractQueryVisitor<IFieldValueQuery>, IQueryBuilderVisitor
+    public class FieldValueQueryVisitor<TNative> : AbstractQueryVisitor<IFieldValueQuery, TNative>
     {
-        public FieldValueQueryVisitor(IFieldValueQuery query, Matches matches, string key) : base(query, matches, key)
+        public FieldValueQueryVisitor(IQueryAdapter<IFieldValueQuery, TNative> adapter, IFieldValueQuery query, Matches matches)
+            : base(adapter, query, matches)
         {
-        }
-
-        public FieldValueQueryVisitor(string field, string value, Matches matches, float? boost, bool? caseSensitive, string key)
-            : this(new LucinqFieldValueQuery(), matches, key)
-        {
-            Query.Field = field;
-            Query.Value = value;
-            Query.CaseSensitive = caseSensitive;
-            Query.Boost = boost;
         }
     }
 }

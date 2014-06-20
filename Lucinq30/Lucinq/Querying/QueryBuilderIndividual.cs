@@ -8,6 +8,8 @@ using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucinq.Adapters;
 using Lucinq.Core.Enums;
+using Lucinq.Core.Querying;
+using Lucinq.Core.QueryTypes;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
@@ -88,7 +90,8 @@ namespace Lucinq.Querying
 		/// <returns>The generated term query</returns>
         public virtual TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
-		    return AddTerm(fieldName, fieldValue, occur, boost, key, caseSensitive).GetNative(new TermQueryAdapter());
+		    var adapter = new TermQueryAdapter();
+		    return Term(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 		}
 
 		#endregion
@@ -254,7 +257,8 @@ namespace Lucinq.Querying
 		/// <returns>The generated wildcard query object</returns>
         public virtual WildcardQuery WildCard(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
-            return AddTerm(fieldName, fieldValue, occur, boost, key, caseSensitive).GetNative(new WildcardQueryAdapter());
+		    var adapter = new WildcardQueryAdapter();
+            return Term(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 		}
 
         public virtual IQueryBuilder WildCards(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet,

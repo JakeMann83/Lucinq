@@ -4,6 +4,6 @@ namespace Lucinq.Core.Visitors
 {
     public interface IQueryBuilderVisitor
     {
-        void VisitQueryBuilder(ICoreQueryBuilder queryBuilder);
+        void VisitQueryBuilder<TQueryBuilder>(TQueryBuilder queryBuilder) where TQueryBuilder : IGroupedQuery;
     }
 }

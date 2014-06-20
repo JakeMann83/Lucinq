@@ -47,7 +47,7 @@ namespace Lucinq.Core.Querying
             var group = Group();
             foreach (var fieldValue in fieldValues)
             {
-                group.AddTerm(fieldName, fieldValue, occur, boost, caseSensitive: caseSensitive);
+                //group.Term(fieldName, fieldValue, occur, boost, caseSensitive: caseSensitive);
             }
 
             return this as TQueryBuilder;

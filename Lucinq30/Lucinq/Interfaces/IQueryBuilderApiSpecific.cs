@@ -28,14 +28,6 @@ namespace Lucinq.Interfaces
         /// <returns>The query built from the queries and groups that have been added</returns>
         Query Build();
 
-        /// <summary>
-        /// Adds a query to the current group
-        /// </summary>
-        /// <param name="query">The query to add</param>
-        /// <param name="occur">The occur value for the query</param>
-        /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
-        void Add(Query query, Matches occur, string key = null);
-
         PrefixQuery PrefixedWith(String fieldname, String value, Matches occur = Matches.NotSet, float? boost = null, String key = null);
 
         /// <summary>

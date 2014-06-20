@@ -49,11 +49,11 @@ namespace Lucinq.Core.Querying
         /// <param name="query">The query to add</param>
         /// <param name="occur">The occur value for the query</param>
         /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
-        public virtual void Add(IQuery query, Matches occur, string key = null)
+        public virtual void Add<TNative>(TNative query, Matches occur, string key = null)
         {
             key = GetQueryKey(key);
             SetOccurValue(this, ref occur);
-            IQueryReference<IQuery> queryReference = new LucinqQueryReference { Occur = occur, Query = query };
+            IQueryReference<TNative> queryReference = new LucinqQueryReference<TNative> { Occur = occur, Query = query };
             Queries.Add(key, queryReference);
         }
 
@@ -68,13 +68,24 @@ namespace Lucinq.Core.Querying
         /// <param name="key">The dictionary key to allow reference beyond the initial scope</param>
         /// <param name="caseSensitive">A boolean denoting whether or not to retain case</param>
         /// <returns>The generated term query</returns>
-        public IFieldValueQuery AddTerm(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
+        public TNative Term<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
             bool? caseSensitive = null)
         {
             bool actualCaseSensitivity = caseSensitive ?? CaseSensitive;
-            FieldValueQueryVisitor visitor = new FieldValueQueryVisitor(fieldName, fieldValue, occur, boost, actualCaseSensitivity, key);
-            visitor.VisitQueryBuilder(this);
-            return visitor.GetQuery();
+
+            LucinqFieldValueQuery query = new LucinqFieldValueQuery();
+            query.Field = fieldName;
+            query.Value = fieldValue;
+            query.CaseSensitive = actualCaseSensitivity;
+            query.Boost = boost;
+
+            FieldValueQueryVisitor<TNative> visitor = new FieldValueQueryVisitor<TNative>(adapter, query, occur);
+            LucinqQueryReference<IQueryBuilderVisitor> reference = new LucinqQueryReference<IQueryBuilderVisitor>();
+            reference.Query = visitor;
+            reference.Occur = occur;
+
+            this.Queries.Add(GetQueryKey(key), reference);
+            return adapter.GetQuery(query);
         }
 
         protected string GetQueryKey(string key)

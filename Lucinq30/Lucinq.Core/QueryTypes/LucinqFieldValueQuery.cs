@@ -1,6 +1,4 @@
-﻿using Lucinq.Core.Querying;
-
-namespace Lucinq.Core.QueryTypes
+﻿namespace Lucinq.Core.QueryTypes
 {
     public class LucinqFieldValueQuery : IFieldValueQuery
     {
@@ -11,10 +9,5 @@ namespace Lucinq.Core.QueryTypes
         public string Value { get; set; }
 
         public bool? CaseSensitive { get; set; }
-
-        public TNative GetNative<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter)
-        {
-            return adapter.GetQuery(this);
-        }
     }
 }

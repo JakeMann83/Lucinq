@@ -4,10 +4,10 @@ using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Core.Querying
 {
-    public class LucinqQueryReference : IQueryReference<IQuery>
+    public class LucinqQueryReference<TNative> : IQueryReference<TNative>
     {
         public Matches Occur { get; set; }
 
-        public IQuery Query { get; set; }
+        public TNative Query { get; set; }
     }
 }

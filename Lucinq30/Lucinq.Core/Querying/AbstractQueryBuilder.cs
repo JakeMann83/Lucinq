@@ -4,7 +4,7 @@ using Lucinq.Core.Enums;
 
 namespace Lucinq.Core.Querying
 {
-    public abstract partial class AbstractQueryBuilder<TQueryBuilder> : CoreQueryBuilder where TQueryBuilder : class, ICoreQueryBuilder
+    public abstract partial class AbstractQueryBuilder<TQueryBuilder> : CoreQueryBuilder where TQueryBuilder : class, IQueryBuilderGroup<TQueryBuilder>, ICoreQueryBuilder
     {
         protected AbstractQueryBuilder()
         {

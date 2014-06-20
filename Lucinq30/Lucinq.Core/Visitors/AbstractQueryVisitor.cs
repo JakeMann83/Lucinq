@@ -4,13 +4,15 @@ using Lucinq.Core.QueryTypes;
 
 namespace Lucinq.Core.Visitors
 {
-    public abstract class AbstractQueryVisitor<TInterface> : IQueryProvider<TInterface> where TInterface : class, IQuery
+    public abstract class AbstractQueryVisitor<TInterface, TNative> : IQueryBuilderVisitor, IQueryProvider<TInterface> where TInterface : class, IQuery
     {
-        protected AbstractQueryVisitor(TInterface query, Matches matches, string key)
+        public IQueryAdapter<TInterface, TNative> Adapter { get; private set; }
+
+        protected AbstractQueryVisitor(IQueryAdapter<TInterface, TNative> adapter, TInterface query, Matches matches)
         {
             Query = query;
             Matches = matches;
-            Key = key;
+            Adapter = adapter;
         } 
 
         protected TInterface Query { get; private set; }
@@ -19,9 +21,9 @@ namespace Lucinq.Core.Visitors
 
         public Matches Matches { get; private set; }
 
-        public virtual void VisitQueryBuilder(ICoreQueryBuilder queryBuilder)
+        public virtual void VisitQueryBuilder<TGroupedQuery>(TGroupedQuery queryBuilder) where TGroupedQuery : IGroupedQuery
         {
-            queryBuilder.Add(Query, Matches, Key);
+            queryBuilder.Add(Adapter.GetQuery(Query), Matches);
         }
 
         public virtual TInterface GetQuery()

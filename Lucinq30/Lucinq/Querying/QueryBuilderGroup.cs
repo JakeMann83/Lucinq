@@ -1,10 +1,8 @@
-﻿using System;
-using Lucene.Net.Search;
+﻿using Lucene.Net.Search;
 using Lucinq.Adapters;
-using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
 using Lucinq.Core.Querying;
-using Lucinq.Core.QueryTypes;
+using Lucinq.Core.Visitors;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
@@ -13,20 +11,6 @@ namespace Lucinq.Querying
     public partial class QueryBuilder : AbstractQueryBuilder<IQueryBuilder>, IQueryBuilder
     {
         #region [ Build Methods ]
-
-        /// <summary>
-        /// Adds a query to the current group
-        /// </summary>
-        /// <param name="query">The query to add</param>
-        /// <param name="occur">The occur value for the query</param>
-        /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
-        public virtual void Add(Query query, Matches occur, string key = null)
-        {
-            key = GetQueryKey(key);
-            SetOccurValue(this, ref occur);
-            IQueryReference<Query> queryReference = new NativeQueryReference { Occur = occur, Query = query };
-            Queries.Add(key, queryReference);
-        }
 
         private void Add(Filter filter)
         {
@@ -39,45 +23,32 @@ namespace Lucinq.Querying
         /// <returns>The query built from the queries and groups that have been added</returns>
         public virtual Query Build()
         {
-            BooleanQuery booleanQuery = new BooleanQuery();
+            IQueryAdapter<IGroupedQuery, BooleanQuery> booleanQueryAdapter = new BooleanQueryAdapter();
+            IGroupedQuery groupedQuery = null;
             foreach (IQueryReference query in Queries.Values)
             {
-                AddNativeQuery(query, booleanQuery);
-                AddLucinqQuery(query, booleanQuery);
+                VisitQuery(query, groupedQuery);
             }
 
-            foreach (IQueryBuilder query in Groups)
+            /*foreach (IQueryBuilder query in Groups)
             {
-                booleanQuery.Add(query.Build(), query.Occur.GetLuceneOccurance());
-            }
+                groupedQuery.Add(query.Build(), query.Occur.GetLuceneOccurance());
+            }*/
 
             BuildSort();
 
-            return booleanQuery;
+            return booleanQueryAdapter.GetQuery(groupedQuery);
         }
 
-        private static void AddNativeQuery(IQueryReference query, BooleanQuery booleanQuery)
+        private void VisitQuery(IQueryReference query, IGroupedQuery groupedQuery)
         {
-            IQueryReference<Query> actualReference = query as IQueryReference<Query>;
-            if (actualReference == null)
+            IQueryReference<IQueryBuilderVisitor> visitorReference = query as IQueryReference<IQueryBuilderVisitor>;
+            if (visitorReference == null)
             {
                 return;
             }
 
-            booleanQuery.Add(actualReference.Query, query.Occur.GetLuceneOccurance());
-        }
-
-        private static void AddLucinqQuery(IQueryReference query, BooleanQuery booleanQuery)
-        {
-            IQueryReference<IQuery> actualReference = query as IQueryReference<IQuery>;
-            if (actualReference == null)
-            {
-                return;
-            }
-
-            // todo: solve this
-
-            booleanQuery.Add(actualReference.Query.GetNative(new WildcardQueryAdapter()), query.Occur.GetLuceneOccurance());
+            visitorReference.Query.VisitQueryBuilder(groupedQuery);
         }
 
         public virtual void BuildSort()

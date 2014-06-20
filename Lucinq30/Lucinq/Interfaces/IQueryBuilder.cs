@@ -2,7 +2,7 @@
 
 namespace Lucinq.Interfaces
 {
-    public interface IQueryBuilder : IQueryBuilderGroup<IQueryBuilder>, IQueryBuilderApiSpecific, IQueryBuilderApiVersionSpecific, ICoreQueryBuilder
+    public interface IQueryBuilder : IQueryBuilderGroup<IQueryBuilder>, IQueryBuilderApiSpecific, IQueryBuilderApiVersionSpecific
     {
     }
 }

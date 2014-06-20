@@ -4,7 +4,7 @@ using Lucinq.Core.Enums;
 
 namespace Lucinq.Core.Querying
 {
-    public interface IQueryBuilderGroup<TGroup> where TGroup : IQueryBuilderGroup<TGroup>
+    public interface IQueryBuilderGroup<TGroup> : ICoreQueryBuilder where TGroup : IQueryBuilderGroup<TGroup>
     {
 		#region [ Methods ]
 
