@@ -8,6 +8,7 @@ using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucinq.Adapters;
 using Lucinq.Core.Enums;
+using Lucinq.Core.Interfaces;
 using Lucinq.Core.Querying;
 using Lucinq.Core.QueryTypes;
 using Lucinq.Extensions;
@@ -72,7 +73,7 @@ namespace Lucinq.Querying
 			PrefixQuery query = new PrefixQuery(new Term(fieldname, value));
 			SetBoostValue(query, boost);
 
-            AddNative(query, occur, key);
+            Add(query, occur, key);
 
 			return query;
 		}
@@ -145,7 +146,7 @@ namespace Lucinq.Querying
 			FuzzyQuery query = new FuzzyQuery(term);
 			SetBoostValue(query, boost);
 
-			AddNative(query, occur, key);
+			Add(query, occur, key);
 			return query;
 		}
 
@@ -169,7 +170,7 @@ namespace Lucinq.Querying
 			SetBoostValue(query, boost);
 			query.SetSlop(slop);
 
-            AddNative(query, occur, key);
+            Add(query, occur, key);
 			return query;
 		}
 
@@ -215,7 +216,7 @@ namespace Lucinq.Querying
 			}
 			TermRangeQuery query = new TermRangeQuery(QueryParser.Escape(fieldName), rangeStart, rangeEnd, includeLower, includeUpper);
 			SetBoostValue(query, boost);
-            AddNative(query, occur, key);
+            Add(query, occur, key);
 			return query;
 		}
 
@@ -292,7 +293,7 @@ namespace Lucinq.Querying
             QueryParser queryParser = new QueryParser(CurrentVersion, field, analyzer);
 			Query query = queryParser.Parse(queryText);
 			SetBoostValue(query, boost);
-			AddNative(query, occur, key);
+			Add(query, occur, key);
 			return query;
 		}
 
@@ -327,12 +328,12 @@ namespace Lucinq.Querying
 
 		#endregion
 
-        private void AddNative(Query query, Matches occur, string key)
+        protected override IQueryReference GetNativeReference<TNative>(TNative query, Matches occur, string key)
         {
             var nativeReference = new NativeQueryReference();
-            nativeReference.Query = query;
+            nativeReference.Query = query as Query;
             nativeReference.Occur = occur;
-            this.Queries.Add(GetQueryKey(key), nativeReference);
+            return nativeReference;
         }
 	}
 }

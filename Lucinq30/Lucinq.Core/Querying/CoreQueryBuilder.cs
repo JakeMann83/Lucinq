@@ -6,7 +6,7 @@ using Lucinq.Core.Visitors;
 
 namespace Lucinq.Core.Querying
 {
-    public class CoreQueryBuilder : ICoreQueryBuilder
+    public abstract class CoreQueryBuilder : ICoreQueryBuilder
     {
         private Matches defaultChildrenOccur;
 
@@ -52,9 +52,18 @@ namespace Lucinq.Core.Querying
         public virtual void Add<TNative>(TNative query, Matches occur, string key = null)
         {
             SetOccurValue(this, ref occur);
+            IQueryReference nativeReference = GetNativeReference(query, occur, key);
+            if (nativeReference != null)
+            {
+                Queries.Add(GetQueryKey(key), nativeReference);
+                return;
+            }
+
             IQueryReference<TNative> queryReference = new LucinqQueryReference<TNative> { Occur = occur, Query = query };
             Queries.Add(GetQueryKey(key), queryReference);
         }
+
+        protected abstract IQueryReference GetNativeReference<TNative>(TNative query, Matches occur, string key);
 
         /// <summary>
         /// Sets up and adds a term query object allowing the search for an explcit term in the field
