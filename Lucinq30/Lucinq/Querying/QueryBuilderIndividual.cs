@@ -216,9 +216,7 @@ namespace Lucinq.Querying
 		{
 			Add(filter);
 		}
-
-		
-
+        
 		#endregion
 
 		#region [ Sort Expressions ]
