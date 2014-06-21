@@ -1,7 +1,9 @@
 ﻿using System;
 using AutoMapper;
 using Lucene.Net.Documents;
+using Lucene.Net.Search;
 using Lucene.Net.Store;
+using Lucinq.Core.Interfaces;
 using Lucinq.Interfaces;
 using Lucinq.Querying;
 using Lucinq.UnitTests.IntegrationTests;
@@ -150,7 +152,7 @@ namespace Lucinq.UnitTests.UnitTests
             {
             }
 
-            public NewsArticleSearch(IIndexSearcherProvider indexSearcherProvider) : base(indexSearcherProvider)
+            public NewsArticleSearch(IIndexSearcherProvider<IndexSearcher> indexSearcherProvider) : base(indexSearcherProvider)
             {
             }
 

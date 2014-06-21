@@ -69,6 +69,7 @@ namespace Lucinq.Core.Querying
         /// Sets up and adds a term query object allowing the search for an explcit term in the field
         /// Note: Wildcards should use the wildcard query type.
         /// </summary>
+        /// <param name="adapter">The query adapter</param>
         /// <param name="fieldName">The field name to search within</param>
         /// <param name="fieldValue">The value to match</param>
         /// <param name="occur">Whether it must, must not or should occur in the field</param>
@@ -76,7 +77,7 @@ namespace Lucinq.Core.Querying
         /// <param name="key">The dictionary key to allow reference beyond the initial scope</param>
         /// <param name="caseSensitive">A boolean denoting whether or not to retain case</param>
         /// <returns>The generated term query</returns>
-        public TNative Term<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
+        public TNative AddFieldValueQuery<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null,
             bool? caseSensitive = null)
         {
             bool actualCaseSensitivity = caseSensitive ?? CaseSensitive;
@@ -94,7 +95,7 @@ namespace Lucinq.Core.Querying
             reference.Query = visitor;
             reference.Occur = occur;
 
-            this.Queries.Add(GetQueryKey(key), reference);
+            Queries.Add(GetQueryKey(key), reference);
             return adapter.GetQuery(query);
         }
 

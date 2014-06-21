@@ -28,7 +28,7 @@ namespace Lucinq.Interfaces
         /// <returns>The query built from the queries and groups that have been added</returns>
         Query Build();
 
-        PrefixQuery PrefixedWith(String fieldname, String value, Matches occur = Matches.NotSet, float? boost = null, String key = null);
+        PrefixQuery PrefixedWith(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null);
 
         /// <summary>
         /// Creates a query using the keyword analyzer

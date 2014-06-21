@@ -1,10 +1,11 @@
 ﻿using Lucene.Net.Search;
 using Lucene.Net.Store;
+using Lucinq.Core.Interfaces;
 using Lucinq.Interfaces;
 
 namespace Lucinq.Querying
 {
-	public class DirectorySearcherProvider : IIndexSearcherProvider
+    public class DirectorySearcherProvider : IIndexSearcherProvider<IndexSearcher>
     {
         #region [ Fields ]
 

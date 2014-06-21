@@ -36,7 +36,7 @@ namespace Lucinq.Core.Querying
         /// <param name="key">A key to allow manipulation from the dictionary later on (a default key will be generated if none is specified</param>
         void Add<TNative>(TNative query, Matches occur, string key = null);
 
-        TNative Term<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string fieldValue, Matches occur = Matches.NotSet,
+        TNative AddFieldValueQuery<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string fieldValue, Matches occur = Matches.NotSet,
             float? boost = null, string key = null,
             bool? caseSensitive = null);
     }

@@ -43,12 +43,12 @@ namespace Lucinq.Core.Querying
         /// <param name="boost">A boost multiplier (1 is default / normal).</param>
         /// <param name="caseSensitive">A boolean denoting whether or not to retain case</param>
         /// <returns>The input query builder</returns>
-        public virtual TQueryBuilder Terms<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null)
+        public virtual TQueryBuilder AddFieldValuesQueries<TNative>(IQueryAdapter<IFieldValueQuery, TNative> adapter, string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, bool? caseSensitive = null)
         {
             var group = Group();
             foreach (var fieldValue in fieldValues)
             {
-                group.Term(adapter, fieldName, fieldValue, occur, boost, caseSensitive: caseSensitive);
+                group.AddFieldValueQuery(adapter, fieldName, fieldValue, occur, boost, caseSensitive: caseSensitive);
             }
 
             return this as TQueryBuilder;

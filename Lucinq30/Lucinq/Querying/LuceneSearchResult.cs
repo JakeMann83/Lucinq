@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
+using Lucinq.Core.Interfaces;
 using Lucinq.Interfaces;
 
 namespace Lucinq.Querying
@@ -18,7 +19,7 @@ namespace Lucinq.Querying
 	    private int totalHits;
 	    private bool searchExecuted;
 	    private TopDocs topDocs;
-	    private readonly IIndexSearcherAccessor searcherAccessor;
+        private readonly IIndexSearcherAccessor<IndexSearcher> searcherAccessor;
 
 		private readonly Filter filter;
 
@@ -26,7 +27,7 @@ namespace Lucinq.Querying
 
         #region [ Constructors ]
 
-        public LuceneSearchResult(IIndexSearcherAccessor searcherAccessor, Query query, Sort sort, Filter filter = null)
+        public LuceneSearchResult(IIndexSearcherAccessor<IndexSearcher> searcherAccessor, Query query, Sort sort, Filter filter = null)
         {
             this.query = query;
             this.sort = sort;
@@ -130,7 +131,7 @@ namespace Lucinq.Querying
 			return indexSearcher.Doc(documentId);
 		}
 
-        private void ExecuteSearch(IIndexSearcherProvider indexSearcherProvider = null)
+        private void ExecuteSearch(IIndexSearcherProvider<IndexSearcher> indexSearcherProvider = null)
 	    {
             if (searchExecuted)
             {
@@ -162,7 +163,7 @@ namespace Lucinq.Querying
 	        ElapsedTimeMs = stopwatch.ElapsedMilliseconds;
 	    }
 
-	    private void PopulateDocuments(IIndexSearcherProvider tempSearcherProvider)
+        private void PopulateDocuments(IIndexSearcherProvider<IndexSearcher> tempSearcherProvider)
 	    {
 	        if (!tempSearcherProvider.ClosesDirectory)
 	        {

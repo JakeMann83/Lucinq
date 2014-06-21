@@ -51,6 +51,8 @@
     <Compile Include="Enums\Matches.cs" />
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Enums\Store.cs" />
+    <Compile Include="Interfaces\IIndexSearcherAccessor.cs" />
+    <Compile Include="Interfaces\IIndexSearcherProvider.cs" />
     <Compile Include="Querying\AbstractQueryBuilder.cs" />
     <Compile Include="Querying\AbstractQueryBuilderGrouping.cs" />
     <Compile Include="Querying\CoreQueryBuilder.cs" />

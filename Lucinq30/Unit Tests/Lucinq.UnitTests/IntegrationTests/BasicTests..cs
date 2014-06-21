@@ -149,7 +149,7 @@ namespace Lucinq.UnitTests.IntegrationTests
 		public void SimpleNot()
 		{
 			IQueryBuilder queryBuilder = new QueryBuilder();
-			queryBuilder.Not().Term("_name", "home");
+			queryBuilder.Not().FieldValueQuery("_name", "home");
 			var results = ExecuteAndAssert(queryBuilder, 12);
 		}*/
 

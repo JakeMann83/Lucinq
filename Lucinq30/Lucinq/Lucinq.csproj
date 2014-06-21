@@ -49,11 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\BooleanQueryAdapter.cs" />
+    <Compile Include="Adapters\FuzzyQueryAdapter.cs" />
+    <Compile Include="Adapters\PrefixQueryAdapter.cs" />
     <Compile Include="Adapters\WildcardQueryAdapter.cs" />
     <Compile Include="Building\DocumentExtensions.cs" />
     <Compile Include="Building\IndexExtensions.cs" />
     <Compile Include="Extensions\ConversionExtensions.cs" />
-    <Compile Include="Interfaces\IIndexSearcherAccessor.cs" />
     <Compile Include="Interfaces\ILuceneSearchResult.cs" />
     <Compile Include="Interfaces\IQueryBuilderApiSpecific.cs" />
     <Compile Include="Interfaces\IQueryBuilderApiVersionSpecific.cs" />
@@ -61,14 +62,12 @@
     <Compile Include="Querying\DateRangeFilter.cs" />
     <Compile Include="Interfaces\ILuceneSearch.cs" />
     <Compile Include="Interfaces\IQueryBuilder.cs" />
-    <Compile Include="Interfaces\IIndexSearcherProvider.cs" />
     <Compile Include="Querying\DelegateItemSearchResult.cs" />
     <Compile Include="Querying\DirectorySearcherProvider.cs" />
     <Compile Include="Querying\ItemSearchResult.cs" />
     <Compile Include="Querying\LuceneSearchResult.cs" />
     <Compile Include="Querying\QueryBuilderVersionSpecific.cs" />
     <Compile Include="Querying\QueryBuilderIndividual.cs" />
-    <Compile Include="Querying\QueryBuilderGroup.cs" />
     <Compile Include="Querying\NativeQueryReference.cs" />
     <Compile Include="Querying\LuceneSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

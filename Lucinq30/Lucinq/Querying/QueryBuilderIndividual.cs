@@ -10,13 +10,12 @@ using Lucinq.Adapters;
 using Lucinq.Core.Enums;
 using Lucinq.Core.Interfaces;
 using Lucinq.Core.Querying;
-using Lucinq.Core.QueryTypes;
 using Lucinq.Extensions;
 using Lucinq.Interfaces;
 
 namespace Lucinq.Querying
 {
-	public partial class QueryBuilder
+    public partial class QueryBuilder : AbstractQueryBuilder<IQueryBuilder>, IQueryBuilder
 	{
 		#region [ Fields ]
 
@@ -68,14 +67,11 @@ namespace Lucinq.Querying
 
 		#region [ Term Expressions ]
 
-		public virtual PrefixQuery PrefixedWith(String fieldname, String value, Matches occur = Matches.NotSet, float? boost = null, String key = null)
+        public virtual PrefixQuery PrefixedWith(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, String key = null, bool? caseSensitive = null)
 		{
-			PrefixQuery query = new PrefixQuery(new Term(fieldname, value));
-			SetBoostValue(query, boost);
+            var adapter = new PrefixQueryAdapter();
+            return AddFieldValueQuery(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 
-            Add(query, occur, key);
-
-			return query;
 		}
 
 		/// <summary>
@@ -92,13 +88,13 @@ namespace Lucinq.Querying
         public virtual TermQuery Term(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
 		    var adapter = new TermQueryAdapter();
-		    return Term(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
+		    return AddFieldValueQuery(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 		}
 
         public virtual IQueryBuilder Terms(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
         {
             var adapter = new TermQueryAdapter();
-            return Terms(adapter, fieldName, fieldValues, occur, boost, caseSensitive);
+            return AddFieldValuesQueries(adapter, fieldName, fieldValues, occur, boost, caseSensitive);
         }
 
 		#endregion
@@ -142,12 +138,8 @@ namespace Lucinq.Querying
 		/// <returns>The generated fuzzy query object</returns>
         public virtual FuzzyQuery Fuzzy(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
-			Term term = GetTerm(fieldName, fieldValue, caseSensitive);
-			FuzzyQuery query = new FuzzyQuery(term);
-			SetBoostValue(query, boost);
-
-			Add(query, occur, key);
-			return query;
+            var adapter = new FuzzyQueryAdapter();
+            return AddFieldValueQuery(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 		}
 
 		#endregion
@@ -265,18 +257,14 @@ namespace Lucinq.Querying
         public virtual WildcardQuery WildCard(string fieldName, string fieldValue, Matches occur = Matches.NotSet, float? boost = null, string key = null, bool? caseSensitive = null)
 		{
 		    var adapter = new WildcardQueryAdapter();
-            return Term(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
+            return AddFieldValueQuery(adapter, fieldName, fieldValue, occur, boost, key, caseSensitive);
 		}
 
         public virtual IQueryBuilder WildCards(string fieldName, string[] fieldValues, Matches occur = Matches.NotSet,
 								  float? boost = null, bool? caseSensitive = null)
 		{
-			var group = Group();
-			foreach (var fieldValue in fieldValues)
-			{
-				group.WildCard(fieldName, fieldValue, occur, boost, caseSensitive:caseSensitive);
-			}
-			return this;
+            var adapter = new WildcardQueryAdapter();
+            return AddFieldValuesQueries(adapter, fieldName, fieldValues, occur, boost, caseSensitive);
 		}
 
 		#endregion
@@ -298,6 +286,37 @@ namespace Lucinq.Querying
 		}
 
 		#endregion
+
+        #region [ Build Methods ]
+
+        private void Add(Filter filter)
+        {
+            CurrentFilter = filter;
+        }
+
+        /// <summary>
+        /// Builds the query
+        /// </summary>
+        /// <returns>The query built from the queries and groups that have been added</returns>
+        public virtual Query Build()
+        {
+            IBooleanQueryAdapter<BooleanQuery> booleanQueryAdapter = new BooleanQueryAdapter(this);
+
+            BuildSort();
+
+            return booleanQueryAdapter.GetQuery();
+        }
+
+        public virtual void BuildSort()
+        {
+            if (SortFields.Count == 0)
+            {
+                return;
+            }
+            CurrentSort = new Sort(SortFields.ToArray());
+        }
+
+        #endregion
 
 		#region [ Helper Methods ]
 

@@ -446,7 +446,7 @@ namespace Lucinq.UnitTests.UnitTests
 
 		#endregion
 
-		#region [ Term Range Tests ]
+		#region [ FieldValueQuery Range Tests ]
 
 		[Test]
 		public void CaseInSensitiveTermRange()

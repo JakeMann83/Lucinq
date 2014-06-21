@@ -3,18 +3,19 @@ using System.Diagnostics;
 using System.IO;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
+using Lucinq.Core.Interfaces;
 using Lucinq.Interfaces;
 using Directory = Lucene.Net.Store.Directory;
 
 namespace Lucinq.Querying
 {
-    public class LuceneSearch : ILuceneSearch<ILuceneSearchResult>, IIndexSearcherAccessor
+    public class LuceneSearch : ILuceneSearch<ILuceneSearchResult>, IIndexSearcherAccessor<IndexSearcher>
     {
         #region [ Fields ]
 
         private readonly string indexPath;
 
-        private readonly IIndexSearcherProvider indexSearcherProvider;
+        private readonly IIndexSearcherProvider<IndexSearcher> indexSearcherProvider;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace Lucinq.Querying
             indexSearcherProvider = new DirectorySearcherProvider(indexDirectory, false);
         }
 
-        public LuceneSearch(IIndexSearcherProvider indexSearcherProvider)
+        public LuceneSearch(IIndexSearcherProvider<IndexSearcher> indexSearcherProvider)
         {
             this.indexSearcherProvider = indexSearcherProvider;
         }
@@ -88,7 +89,7 @@ namespace Lucinq.Querying
             return creator(luceneSearchResult);
         }
 
-        public virtual IIndexSearcherProvider GetIndexSearcherProvider()
+        public virtual IIndexSearcherProvider<IndexSearcher> GetIndexSearcherProvider()
         {
             return indexSearcherProvider ?? new DirectorySearcherProvider(FSDirectory.Open(new DirectoryInfo(indexPath)));
         }
@@ -106,7 +107,7 @@ namespace Lucinq.Querying
         {
         }
 
-        protected LuceneItemSearch(IIndexSearcherProvider indexSearcherProvider)
+        protected LuceneItemSearch(IIndexSearcherProvider<IndexSearcher> indexSearcherProvider)
             : base(indexSearcherProvider)
         {
         }
